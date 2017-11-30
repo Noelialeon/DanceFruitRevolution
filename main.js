@@ -3,6 +3,7 @@ var arrow;
 var canvas;
 var ctx;
 var character;
+var detectionBody;
 
 var myGameArea = {
 		
@@ -10,7 +11,7 @@ var myGameArea = {
 		this.interval = setInterval(updateGameArea, 20);
 	},
 	clear: function () {
-		ctx.clearRect(0, 0, 800, 500);
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
 	}
 };
 
@@ -22,10 +23,12 @@ function updateGameArea() {
 	arrow.newPos();
 	
 	arrow.update();
+	detectionBody.update();
 };
 
 function startGame() {
 	arrow = new Arrow(20, 20, 'green', 50, 400);
+	detectionBody = new DetectionBody(50, 30, 50, 50);
 	myGameArea.start();
 
 };
@@ -37,5 +40,6 @@ $(document).ready(function () {
 	ctx = canvas.getContext('2d');
 
 	startGame();
+
 });
 		

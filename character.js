@@ -2,10 +2,11 @@
 function Character(){
     this.counter = 0;
     this.createAreaA = function(){
-            ctx = myGameArea.context;
-            ctx.fillStyle = 'grey';
-            ctx.fillRect(50, 10, 10, 200);
-          };
+        ctx = myGameArea.context;
+        ctx.fillStyle = 'grey';
+        ctx.fillRect(50, 10, 10, 200);
+        };
+        
     };
 
 
@@ -14,7 +15,18 @@ Character.prototype.move = function(){
 };
 
 Character.prototype.generateArrows = function(){
-    //función para que genere las flechas aleatoriamente relativas a este personaje.
+//función para que genere las flechas aleatoriamente relativas a este personaje.
 };
 
-var player1 = new Character();
+function DetectionBody(width, height, x, y){
+    this.width = width;
+    this.height = height;
+    this.x = x;
+    this.y = y;
+    ctx.fillStyle = 'grey';
+    ctx.fillRect(this.x, this.y, this.width, this.height);
+    this.update = function () {
+        ctx.fillStyle = 'grey';
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+    };
+}
