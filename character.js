@@ -18,15 +18,15 @@ Character.prototype.generateArrows = function(){
 //función para que genere las flechas aleatoriamente relativas a este personaje.
 };
 
-function DetectionBody(width, height, x, y){
+function DetectionBody(width, height, color, x, y){
     this.width = width;
     this.height = height;
     this.x = x;
     this.y = y;
-    ctx.fillStyle = 'grey';
+    ctx.fillStyle = color;
     ctx.fillRect(this.x, this.y, this.width, this.height);
     this.update = function () {
-        ctx.fillStyle = 'grey';
+        ctx.fillStyle = color;
         ctx.fillRect(this.x, this.y, this.width, this.height);
     };
 }
