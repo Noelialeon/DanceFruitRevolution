@@ -18,12 +18,14 @@ function Arrow(direction, width, height, color, x, y) {
     this.status = 'active';
 };
 
+// ecapsular la deteccion de eventos dentro del metodo Game
 document.onkeydown = function (e) {
     switch (e.keyCode) {
         case 37:
             if (allArrows[0].direction === "up") {
                 detectionBody.isOnDetectionBody(allArrows[0]);
             };
+            // function 
             break;
         // case 40:
         //     arrowDown.isOnDetectionBody();

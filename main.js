@@ -23,38 +23,63 @@ var myGameArea = {
 };
 
 function startGame() {
-	detectionBody = new DetectionBody(25, 40, 'blue', 80, 50);
-	detectionBodyDown = new DetectionBody(detectionBody.width, detectionBody.height/2, 'grey', detectionBody.x, (detectionBody.y + detectionBody.height));
+	generateDetectionBody();
 	myGameArea.start();
 };
+
+function generateDetectionBody() {
+	detectionBody = new DetectionBody(25, 40, 'blue', 80, 50);
+	detectionBodyDown = new DetectionBody(detectionBody.width, detectionBody.height / 2, 'grey', detectionBody.x, (detectionBody.y + detectionBody.height));
+}
 
 function updateGameArea() {
 
 	//limpia
-	myGameArea.clear();
-	myGameArea.frameNo += 1;
+	clearMyGameArea();
 
 	// pinta el bloque de detección
-	detectionBody.update();
-	detectionBodyDown.update();
-	if (myGameArea.frameNo == 1 || everyinterval(25)) {
+	paintDetectionBodies();
 
-		//genera un arrow random, con dirección y posición X relacionadas.
-		randomArrow();
-		allArrows.push(new Arrow(randomArrowDirection, 20, 20, 'green',randomArrowX, 400));
-	};
+	//genera un arrow random, con dirección equivalente a posición, cada X fps
+	generateRandomArrow();
 
 	//Limpiar el arrow[0] cuando pasa una posición Y
-	if (allArrows[0].y < 20){
-		allArrows.splice(0, 1)
-	};
+	deleteArrow();
 	
 		//pinta
+	paintAllArrows();
+};
+
+function deleteArrow() {
+	if (allArrows[0].y < 20) {
+		allArrows.splice(0, 1);
+	};
+}
+
+function clearMyGameArea() {
+	myGameArea.clear();
+	myGameArea.frameNo += 1;
+};
+
+function paintDetectionBodies() {
+	detectionBody.update();
+	detectionBodyDown.update();
+};
+
+function generateRandomArrow() {
+	if (myGameArea.frameNo == 1 || everyinterval(25)) {
+		randomArrow();
+		allArrows.push(new Arrow(randomArrowDirection, 20, 20, 'green', randomArrowX, 400));
+	};
+};
+
+function paintAllArrows() {
 	for (var i = 0; i < allArrows.length; i += 1) {
 		allArrows[i].newPos();
 		allArrows[i].update();
 	};
-};
+}
+
 
 //frecuencia con la que aparece cada arrow
 function everyinterval(n){
@@ -62,6 +87,7 @@ function everyinterval(n){
 	return false;
 };
 
+//genera un número random para asignar a las variables Direction y X los valores de los array allArrowDirection y allArrowX
 function randomArrow(){
 	var i = Math.floor(Math.random() * 2);
 	randomArrowDirection = allArrowDirections[i];
