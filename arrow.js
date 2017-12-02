@@ -15,23 +15,32 @@ function Arrow(direction, width, height, color, x, y) {
     this.newPos = function () {
         this.y -= 3;
     };
+    this.status = 'active';
 };
 
 document.onkeydown = function (e) {
     switch (e.keyCode) {
-        case 38:
-        for (var i = 0; i < arrowUp.length; i += 1) {
-			detectionBody.isOnDetectionBody(arrowUp[i]);
-        };
-        break;
+        case 37:
+            if (allArrows[0].direction === "up") {
+                detectionBody.isOnDetectionBody(allArrows[0]);
+            };
+            break;
         // case 40:
         //     arrowDown.isOnDetectionBody();
         //     break;
         // case 38:
         //     arrowLeft.isOnDetectionBody();
         //     break;
-        // case 39:
-        //     arrowRight.isOnDetectionBody(arrowRight);
-        //     break;
+        case 39:
+            if (allArrows[0].direction === "right") {
+                detectionBody.isOnDetectionBody(allArrows[0]);
+            };
+            break;
+    };
+};
+
+function isActive(arrow) {
+    if (arrow.status === 'active') {
+        return true
     };
 };

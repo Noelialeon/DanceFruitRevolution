@@ -1,12 +1,16 @@
 //inicia el juego y lo coloca en el html
 var canvas;
 var ctx;
+
 var character;
 var detectionBody;
 var detectionBodyDown;
-var arrowUp = [];
-var arrowRight = [];
-var allArrows = [arrowUp,arrowRight];
+
+var allArrows = [];
+var allArrowDirections = ['up','right'];
+var allArrowX = [50, 100];
+var randomArrowDirection;
+var randomArrowX;
 
 var myGameArea = {
 	start: function () {
@@ -19,48 +23,55 @@ var myGameArea = {
 };
 
 function startGame() {
-	detectionBody = new DetectionBody(25, 80, 'blue', 80, 50);
+	detectionBody = new DetectionBody(25, 40, 'blue', 80, 50);
 	detectionBodyDown = new DetectionBody(detectionBody.width, detectionBody.height/2, 'grey', detectionBody.x, (detectionBody.y + detectionBody.height));
 	myGameArea.start();
 };
 
 function updateGameArea() {
-	var y;
-	//Limpiar el array Arrow para que no acumule datos
-	if (arrowUp.length > 5){
-		arrowUp.splice(0, 1)
-	};
+
 	//limpia
 	myGameArea.clear();
 	myGameArea.frameNo += 1;
-	if (myGameArea.frameNo == 1 || everyinterval(150)) {
-		y = canvas.height - 100;
-			arrowUp.push(new Arrow('up', 20, 20, 'green', 100, 400));
-			arrowRight.push(new Arrow('right', 20, 20, 'green', 100, 400));
-		};
-	for (i = 0; i < arrowUp.length; i += 1) {
-			arrowUp[i].newPos();
-			arrowUp[i].update();
-	};	
+
+	// pinta el bloque de detección
 	detectionBody.update();
 	detectionBodyDown.update();
+	if (myGameArea.frameNo == 1 || everyinterval(25)) {
+
+		//genera un arrow random, con dirección y posición X relacionadas.
+		randomArrow();
+		allArrows.push(new Arrow(randomArrowDirection, 20, 20, 'green',randomArrowX, 400));
+	};
+
+	//Limpiar el arrow[0] cuando pasa una posición Y
+	if (allArrows[0].y < 20){
+		allArrows.splice(0, 1)
+	};
+	
+		//pinta
+	for (var i = 0; i < allArrows.length; i += 1) {
+		allArrows[i].newPos();
+		allArrows[i].update();
+	};
 };
 
+//frecuencia con la que aparece cada arrow
 function everyinterval(n){
 	if ((myGameArea.frameNo / n) % 1 == 0) {return true;}
 	return false;
-	
-}
+};
 
-// function randomArrow(){};
+function randomArrow(){
+	var i = Math.floor(Math.random() * 2);
+	randomArrowDirection = allArrowDirections[i];
+	randomArrowX = allArrowX[i];
+};
 
 
 $(document).ready(function () {
-	 
 	canvas = document.getElementById("canvas");
 	ctx = canvas.getContext('2d');
-
 	startGame();
-
 });
 		
