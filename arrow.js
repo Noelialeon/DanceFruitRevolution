@@ -17,36 +17,13 @@ function Arrow(direction, width, height, color, x, y) {
     };
 };
 
-// Arrow.prototype.hide = function (){
-//     this.opacity = 0;
-// }
-
-Arrow.prototype.isOnDetectionBody = function (arrow) {
-    if ((arrow.y > detectionBody.y) && ((arrow.y + arrow.height) < (detectionBody.y + detectionBody.height))) {
-        counter += 2;
-        console.log("perfect", counter);
-        blockArrow(arrow);
-        return true;
-    }
-    else if ((arrow.y > detectionBody.y) && ((arrow.y + arrow.height) < (detectionBodyDown.y + detectionBodyDown.height))) {
-        counter += 1;
-        console.log("almost perfect", counter);
-        blockArrow(arrow);
-        return true;
-    } else {
-        console.log("not the right key or miss it");
-    }
-    //else if ((arrow.y > detectionBodyUp.y) && ((arrow.y + arrow.height) < (detectionBodyUp.y + detectionBodyUp.height))) {
-    //     counter = +1;
-    //     console.log(counter);
-    //     return true
-};
-
 document.onkeydown = function (e) {
     switch (e.keyCode) {
         case 38:
-            myArrows[0].isOnDetectionBody(myArrows[0]);
-            break;
+        for (var i = 0; i < arrowUp.length; i += 1) {
+			detectionBody.isOnDetectionBody(arrowUp[i]);
+        };
+        break;
         // case 40:
         //     arrowDown.isOnDetectionBody();
         //     break;
@@ -56,12 +33,5 @@ document.onkeydown = function (e) {
         // case 39:
         //     arrowRight.isOnDetectionBody(arrowRight);
         //     break;
-    };
-};
-
-
-function blockArrow(arrowType){
-    if(arrowType.x < 50){
-        arroyType.opacity = 0;
     };
 };
