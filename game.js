@@ -34,7 +34,7 @@ Game.prototype._updateGameArea = function() {
 Game.prototype._generateRandomArrow = function() {
   if (this.frameNo == 1 || this._everyinterval(30)) {
     this._randomArrow();
-    this.allArrows.push(new Arrow(this.randomArrowDirection, 400, 20, 20));
+    this.allArrows.push(new Arrow(this.ctx, this.randomArrowDirection, 400, 20, 20));
   };
 };
 
@@ -72,15 +72,19 @@ Game.prototype._assignControlsToKeys = function () {
     switch (e.keyCode) {
       case 39:
         this.detectionBody.isOnDetectionBody(this.character, this.allArrows[0], 'left');
+        if(this.detectionBody.isOnDetectionBody){this.character.move('left')};
         break;
       case 38:
         this.detectionBody.isOnDetectionBody(this.character, this.allArrows[0], 'up');
+        if(this.detectionBody.isOnDetectionBody){ this.character.move('up')};
         break;
       case 40:
         this.detectionBody.isOnDetectionBody(this.character, this.allArrows[0], 'down');
+        if(this.detectionBody.isOnDetectionBody){this.character.move('down')};
         break;
       case 37:
         this.detectionBody.isOnDetectionBody(this.character, this.allArrows[0], 'right');
+        if(this.detectionBody.isOnDetectionBody){this.character.move('right')};
         break;
     };
   }.bind(this);

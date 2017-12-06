@@ -4,13 +4,13 @@ function DetectionBody(ctx, width, height, x, y, radius, color){
   this.x = x;
   this.y = y;
   this.radius = radius;
-  ctx.fillStyle = color;
-  this._roundedRect(ctx, this.x, this.y, this.width, this.height, this.radius);
+  this.ctx = ctx;
+  this.color = color;
+  this._roundedRect();
 };
 
 DetectionBody.prototype.update = function () {
-  ctx.fillStyle = this.fillStyle;
-  this._roundedRect(ctx, this.x, this.y, this.width, this.height, this.radius);
+  this._roundedRect();
 };
 
 //Sistema de puntuación y desactivar el arrow una vez se ha sumado puntos.
@@ -32,17 +32,18 @@ DetectionBody.prototype.isOnDetectionBody = function (character, arrow, directio
   };
 };
 
-DetectionBody.prototype._roundedRect = function(ctx,x,y,width,height,radius){
-    ctx.beginPath();
-    ctx.moveTo(x,y+radius);
-    ctx.lineTo(x,y+height-radius);
-    ctx.quadraticCurveTo(x,y+height,x+radius,y+height);
-    ctx.lineTo(x+width-radius,y+height);
-    ctx.quadraticCurveTo(x+width,y+height,x+width,y+height-radius);
-    ctx.lineTo(x+width,y+radius);
-    ctx.quadraticCurveTo(x+width,y,x+width-radius,y);
-    ctx.lineTo(x+radius,y);
-    ctx.quadraticCurveTo(x,y,x,y+radius);
-    ctx.fill();
-    ctx.closePath();
+DetectionBody.prototype._roundedRect = function(){
+  this.ctx.fillStyle = this.color;
+  this.ctx.beginPath();
+  this.ctx.moveTo(this.x, this.y + this.radius);
+  this.ctx.lineTo(this.x, this.y + this.height - this.radius);
+  this.ctx.quadraticCurveTo(this.x, this.y + this.height, this.x + this.radius,  this.y + this.height);
+  this.ctx.lineTo( this.x + this.width - this.radius,  this.y + this.height);
+  this.ctx.quadraticCurveTo(this.x + this.width, this.y + this.height, this.x + this.width, this.y + this.height - this.radius);
+  this.ctx.lineTo( this.x + this.width, this.y + this.radius);
+  this.ctx.quadraticCurveTo(this.x + this.width, this.y, this.x + this.width - this.radius, this.y);
+  this.ctx.lineTo( this.x + this.radius, this.y);
+  this.ctx.quadraticCurveTo(this.x, this.y, this.x, this.y + this.radius);
+  this.ctx.fill();
+  this.ctx.closePath();
 };
