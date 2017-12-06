@@ -8,3 +8,11 @@ $(document).ready(function () {
 	startGame();
 });
 		
+function startGame(){
+	var game = new Game(
+		ctx,
+		new DetectionBody(ctx, 170, 40, 50, 70, 10, '#95f8cf'),
+		new Character(),
+	);
+	game.start();
+};
