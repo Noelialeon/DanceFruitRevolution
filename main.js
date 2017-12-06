@@ -12,7 +12,7 @@ function startGame(){
 	var game = new Game(
 		ctx,
 		new DetectionBody(ctx, 170, 40, 50, 70, 10, '#95f8cf'),
-		new Character(),
+		new Character(ctx, 100, 150, 50, 50, 10, '#6efe42'),
 	);
 	game.start();
 };

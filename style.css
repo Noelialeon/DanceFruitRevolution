@@ -5,5 +5,6 @@ border: 6px;
 canvas {
   border:5px solid #95f8cf;
   background-color: #dbfde8;
+  /* background-color: #6efe42; */
   border-radius: 10px;
 }

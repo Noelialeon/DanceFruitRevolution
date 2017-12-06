@@ -8,7 +8,6 @@ function Game(ctx, detectionBody, character){
   this.character = character;
 };
     
-  
 Game.prototype.start = function(){
   this._assignControlsToKeys();
   this.gameInterval = setInterval(this._updateGameArea.bind(this), 20);
@@ -19,17 +18,17 @@ Game.prototype._clear = function (){
 };
 
 Game.prototype._updateGameArea = function() {
-    this._clear();
-    this.frameNo += 1;
-    
-    //Elimina los arrows que superen la altura de detectionBody
-    this._deleteArrow();
+  this._clear();
+  this.frameNo += 1;
+   
+  //Elimina los arrows que superen la altura de detectionBody
+  this._deleteArrow();
 
-    //pinta
-    this.detectionBody.update();
-    this.character.update();
-    this._generateRandomArrow();
-    this._paintAllArrows();
+  //pinta
+  this.detectionBody.update();
+  this.character.update();
+  this._generateRandomArrow();
+  this._paintAllArrows();
 };
 		
 Game.prototype._generateRandomArrow = function() {
