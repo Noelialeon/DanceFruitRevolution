@@ -1,4 +1,4 @@
-function Game(ctx, detectionBody, character){
+function Game(ctx, detectionBody, character, scoreBar){
   this.ctx = ctx;
   this.frameNo = 0; 
   this.allArrows = [];
@@ -6,6 +6,7 @@ function Game(ctx, detectionBody, character){
   this.randomArrowDirection = undefined;
   this.detectionBody = detectionBody;
   this.character = character;
+  this.scoreBar = new ScoreBar(ctx, this.character);
 };
     
 Game.prototype.start = function(){
@@ -17,24 +18,34 @@ Game.prototype._clear = function (){
   this.ctx.clearRect(0, 0, canvas.width, canvas.height);
 };
 
+Game.prototype._stop = function (){
+  clearInterval(this.gameInterval);
+};
+
 Game.prototype._updateGameArea = function() {
+  if (this.character.score <= -5) {
+    this._stop();
+  };
   this._clear();
   this.frameNo += 1;
    
   //Elimina los arrows que superen la altura de detectionBody
   this._deleteArrow();
+  this.arrowsOnDetectionBody();
 
-  //pinta
-  this.detectionBody.update();
+  //pinta 
   this.character.update();
+  this.detectionBody.update();
   this._generateRandomArrow();
   this._paintAllArrows();
+  this.scoreBar.hideBar.newWidth();
+  this.scoreBar.update();
 };
 		
 Game.prototype._generateRandomArrow = function() {
   if (this.frameNo == 1 || this._everyinterval(30)) {
     this._randomArrow();
-    this.allArrows.push(new Arrow(this.ctx, this.randomArrowDirection, 400, 20, 20));
+    this.allArrows.push(new Arrow(this.ctx, this.randomArrowDirection, this.detectionBody.x, 400, 20, 20));
   };
 };
 
@@ -71,21 +82,34 @@ Game.prototype._assignControlsToKeys = function () {
   document.onkeydown = function (e) {
     switch (e.keyCode) {
       case 39:
-        this.detectionBody.isOnDetectionBody(this.character, this.allArrows[0], 'left');
-        if(this.detectionBody.isOnDetectionBody){this.character.move('left')};
+        if(this.detectionBody.isOnDetectionBody(this.character, this.allArrows[0], 'left')){
+          this.character.move('left')
+        };
         break;
       case 38:
-        this.detectionBody.isOnDetectionBody(this.character, this.allArrows[0], 'up');
-        if(this.detectionBody.isOnDetectionBody){ this.character.move('up')};
+        if(this.detectionBody.isOnDetectionBody(this.character, this.allArrows[0], 'up')){
+          this.character.move('up')
+        };
         break;
       case 40:
-        this.detectionBody.isOnDetectionBody(this.character, this.allArrows[0], 'down');
-        if(this.detectionBody.isOnDetectionBody){this.character.move('down')};
+        if(this.detectionBody.isOnDetectionBody(this.character, this.allArrows[0], 'down')){
+          this.character.move('down')
+        };
         break;
       case 37:
-        this.detectionBody.isOnDetectionBody(this.character, this.allArrows[0], 'right');
-        if(this.detectionBody.isOnDetectionBody){this.character.move('right')};
+        if(this.detectionBody.isOnDetectionBody(this.character, this.allArrows[0], 'right')){
+          this.character.move('right')
+        };
         break;
     };
   }.bind(this);
+};
+
+Game.prototype.arrowsOnDetectionBody = function(){
+  for (var i = 0; i < this.allArrows.length; i += 1) {
+    if (this.allArrows[i].status === undefined && this.allArrows[i].y >= (this.detectionBody.y - 3) &&
+    ((this.allArrows[i].y + this.allArrows[i].height) < (this.detectionBody.y + this.detectionBody.height*2))){
+    this.allArrows[i].status = true;
+    };
+  };
 };

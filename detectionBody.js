@@ -16,21 +16,20 @@ DetectionBody.prototype.update = function () {
 //Sistema de puntuación y desactivar el arrow una vez se ha sumado puntos.
 DetectionBody.prototype.isOnDetectionBody = function (character, arrow, direction) {
   if (arrow.direction === direction && arrow.status) {
-    if (arrow.y >= (this.y - 5) && ((arrow.y + arrow.height) < (this.y + this.height + 5))){ 
         console.log("perfect");
         character.score += 2;
         arrow.status = false;
         return true;
     };
-    if ((arrow.y > (this.y + this.height)) && ((arrow.y + arrow.height) < (this.y + this.height*2))) {
+   if ((arrow.y > (this.y + this.height)) && ((arrow.y + arrow.height) < (this.y + this.height*2))) {
         console.log("almost perfect");
         character.score += 1; 
         arrow.status = false;
         return true;
     };
+    character.score -= 1;
     console.log("Miss it");
   };
-};
 
 DetectionBody.prototype._roundedRect = function(){
   this.ctx.fillStyle = this.color;

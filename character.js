@@ -11,17 +11,23 @@ function Character(ctx, x, color){
   this.printCharacter();
 };
 
-Character.prototype.printScore = function() {
-  this.ctx.fillStyle = this.color;
-  this.ctx.beginPath()
-  this.ctx.font = "30px Arial";
-  this.ctx.fillText(this.score,60,40);
-};
-
 Character.prototype.update = function(){
   this.printScore();
-  this.ctx.fillStyle = this.color;
-  this.ctx.fillRect(this.x, this.y, this.width, this.height);
+  this.printCharacter();
+};
+
+Character.prototype.printScore = function() {
+  if(this.score < 0){
+    this.ctx.fillStyle = this.color;
+    this.ctx.beginPath()
+    this.ctx.font = "30px Arial";
+    this.ctx.fillText("losing",10,50);
+  } else {
+    this.ctx.fillStyle = this.color;
+    this.ctx.beginPath()
+    this.ctx.font = "30px Arial";
+    this.ctx.fillText(this.score,10,50);
+  };
 };
 
 Character.prototype.printCharacter = function() {
@@ -49,7 +55,3 @@ Character.prototype.move = function(direction){
         break;
   };
 };
-
-// // Character.prototype.generateArrows = function(){
-// // //función para que genere las flechas aleatoriamente relativas a este personaje.
-// // };

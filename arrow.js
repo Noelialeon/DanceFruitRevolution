@@ -1,25 +1,26 @@
-function Arrow(ctx, direction, y, width, height) {
+function Arrow(ctx, direction, x, y, width, height) {
     this.ctx = ctx;
     this.direction = direction;
     this.width = width;
     this.height = height;
+    this.x = x
     this.y = y;
-    this.status = true;
+    this.status = undefined;
     switch (this.direction) {
         case 'right':
-            this.x = 50;
+            this.x = x;
             this._drawArrowImage('images/arrowRight.png');
             break;
         case 'up':
-            this.x = 100;
+            this.x = x + 50;
             this._drawArrowImage('images/arrowUp.png');
             break;
         case 'down':
-            this.x = 150;
+            this.x = x + 100;
             this._drawArrowImage('images/arrowDown.png');
             break;
         case 'left':
-            this.x = 200;
+            this.x = x + 150;
             this._drawArrowImage('images/arrowLeft.png');
             break;
     };
