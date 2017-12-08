@@ -6,21 +6,23 @@ function ScoreBar(ctx, character){
   this.ctx = ctx;
   this.character = character;
   this.hideBar = new HideBar(ctx, character);
+  this.ctx.save();
   this.printScoreBar();
+  this.ctx.restore();
 };
 
 ScoreBar.prototype.printScoreBar = function(){
-  this.ctx.save();
   this.hideBar.printHideBar();
   this.ctx.globalCompositeOperation = 'source-atop';
   this.image = new Image();
   this.image.src = 'images/Progress-bar-points.png';
   this.ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
-  this.ctx.restore();
 };
 
 ScoreBar.prototype.update = function(){
-this.printScoreBar();
+  this.ctx.save();
+  this.printScoreBar();
+  this.ctx.restore();
 };
 
 //Constructor la capa que nos mostrára la Score Bar
@@ -35,10 +37,13 @@ function HideBar(ctx, character){
 };
 
 HideBar.prototype.printHideBar = function(){
-  this.ctx.fillStyle = "white";
-  this.ctx.fillRect(this.x, this.y, this.width/4, this.height);
+  this.ctx.fillStyle = '#dbfde8';
+  this.ctx.fillRect(this.x, this.y, this.width, this.height);
 };
 
 HideBar.prototype.newWidth = function(){
-  this.width = this.character.score *10;
+  this.width = this.character.score;
+  if(this.width >= 170){
+    this.width = 170;
+  };
 };

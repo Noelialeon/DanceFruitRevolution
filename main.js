@@ -11,8 +11,9 @@ $(document).ready(function () {
 function startGame(){
 	var game = new Game(
 		ctx,
-		new DetectionBody(ctx, 170, 40, 50, 90, 10, '#95f8cf'),
 		new Character(ctx, 80,'#6efe42'),
+		new ScoreBar(ctx)
 	);
 	game.start();
+	
 };

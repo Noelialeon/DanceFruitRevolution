@@ -20,12 +20,12 @@ Character.prototype.printScore = function() {
   if(this.score < 0){
     this.ctx.fillStyle = this.color;
     this.ctx.beginPath()
-    this.ctx.font = "30px Arial";
+    this.ctx.font = "15px Arial";
     this.ctx.fillText("losing",10,50);
   } else {
     this.ctx.fillStyle = this.color;
-    this.ctx.beginPath()
-    this.ctx.font = "30px Arial";
+    this.ctx.beginPath();
+    this.ctx.font = "15px Arial";
     this.ctx.fillText(this.score,10,50);
   };
 };
