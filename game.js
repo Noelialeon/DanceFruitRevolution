@@ -8,8 +8,9 @@ function Game(ctx, character, scoreBar){
   this.detectionBody = new DetectionBody(this.ctx, 170, 40, 50, 90, 10,'#95f8cf');
   this.character = character;
   this.scoreSystem = 2;
-  this.scoreBar = new ScoreBar(ctx, this.character);
+  this.scoreBar = new ScoreBar(ctx, 170, 40, 50, 20, this.character);
   this.song = new Song('audio/main-song.mp3', this);
+  this.tempoSong = 38;
 };
     
 Game.prototype.start = function(){
@@ -23,6 +24,7 @@ Game.prototype._clear = function (){
 
 Game.prototype.stop = function (){
   clearInterval(this.gameInterval);
+  this.character.stopCharacter();
 };
 
 Game.prototype._updateGameArea = function() {
@@ -32,8 +34,9 @@ Game.prototype._updateGameArea = function() {
   this._deleteArrow();
   this.arrowsOnDetectionBody();
   //pinta 
-  this.character.update();
+  this.character.printScore();
   this.detectionBody.update();
+  this.character.drawImage();
   this._generateRandomArrow();
   this._paintAllArrows();
   this.scoreBar.hideBar.newWidth();
@@ -47,19 +50,14 @@ Game.prototype._pointSystem = function(){
   };
 };
 
-// Game.prototype._stopCombo = function(){
-//    console.log("cleaning combo");
-//       clearInterval(this.intervalCombo);
-//       this.arrowsOnCombo = 0;
-//       this.scoreSystem = 2;
-//       this.detectionBody.color = '#95f8cf';
-// };
-
 Game.prototype._deleteArrow = function() {
   this.allArrows.forEach(function(arrow){
     if ((arrow.y + arrow.height) < this.detectionBody.y - 5) {
       var index = this.allArrows.indexOf(arrow);
       this.allArrows.splice(index, 1);
+      if(arrow.status === true){
+        this.character.score -= 1;
+      };
     };
   }.bind(this));
 };
@@ -74,14 +72,14 @@ Game.prototype.arrowsOnDetectionBody = function(){
 };
 
 Game.prototype._generateRandomArrow = function() {
-  if (this.frameNo > 1580){
-    if (this._arrowsTempoControl(23,2) || this.frameNo == 1) {
+  if (this.frameNo > (this.tempoSong*30)){
+    if (this._arrowsTempoControl(this.tempoSong) || this.frameNo == 1) {
       this._randomArrow(4);
       this.allArrows.push(new Arrow(this.ctx, this.randomArrowDirection, this.detectionBody.x, 400, 20, 20));
       this.arrowCounter++;
     };
-  } else if (this.frameNo > 150){
-    if (this._arrowsTempoControl(46,4) || this.frameNo == 1) {
+  } else if (this.frameNo > this.tempoSong){
+    if (this._arrowsTempoControl(this.tempoSong) || this.frameNo == 1) {
       this._randomArrow(2);
       this.allArrows.push(new Arrow(this.ctx, this.randomArrowDirection, this.detectionBody.x, 400, 20, 20));
       this.arrowCounter++;   
@@ -116,22 +114,22 @@ Game.prototype._assignControlsToKeys = function () {
     switch (e.keyCode) {
       case 39:
         if(this.isOnDetectionBody('left')){
-          this.character.move('left')
+          // this.character.move('left')
         };
         break;
       case 38:
         if(this.isOnDetectionBody('up')){
-          this.character.move('up')
+          // this.character.move('up')
         };
         break;
       case 40:
         if(this.isOnDetectionBody('down')){
-          this.character.move('down')
+          // this.character.move('down')
         };
         break;
       case 37:
         if(this.isOnDetectionBody('right')){
-          this.character.move('right')
+          // this.character.move('right')
         };
         break;
     };

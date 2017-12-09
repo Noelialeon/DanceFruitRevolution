@@ -1,11 +1,11 @@
-function ScoreBar(ctx, character){
-  this.width = 170;
-  this.height = 40;
-  this.x = 50;
-  this.y = 20
+function ScoreBar(ctx, width, height, x, y, character){
   this.ctx = ctx;
+  this.width = width;
+  this.height = height;
+  this.x = x;
+  this.y = y;
   this.character = character;
-  this.hideBar = new HideBar(ctx, character);
+  this.hideBar = new HideBar(ctx, 0, height, x, y, character);
   this.ctx.save();
   this.printScoreBar();
   this.ctx.restore();
@@ -26,13 +26,14 @@ ScoreBar.prototype.update = function(){
 };
 
 //Constructor la capa que nos mostrára la Score Bar
-function HideBar(ctx, character){
-  this.width = 0;
-  this.height = 40;
-  this.x = 50;
-  this.y = 20
+function HideBar(ctx, width, height, x, y, character, scoreBarWidth){
   this.ctx = ctx;
+  this.width = width;
+  this.height = height;
+  this.x = x;
+  this.y = y;
   this.character = character;
+  this.scoreBarWidth = scoreBarWidth;
   this.printHideBar();
 };
 
@@ -43,7 +44,7 @@ HideBar.prototype.printHideBar = function(){
 
 HideBar.prototype.newWidth = function(){
   this.width = this.character.score;
-  if(this.width >= 170){
-    this.width = 170;
+  if(this.width >= this.scoreBarwidth){
+    this.width = this.scoreBarwidth;
   };
 };

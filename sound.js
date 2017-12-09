@@ -9,7 +9,6 @@ function Song(src, game) {
   };
 };
 
-
 Song.prototype.play = function(){
       this.sound.play();
 };
