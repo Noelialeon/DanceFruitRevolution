@@ -1,4 +1,4 @@
-function ScoreBar(ctx, width, height, x, y, character){
+function ScoreBar(ctx, x, y, width, height, character){
   this.ctx = ctx;
   this.width = width;
   this.height = height;

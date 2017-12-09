@@ -1,16 +1,17 @@
-function Game(ctx, character, scoreBar){
+function Game(ctx, detectionBody, character, scoreBar){
   this.ctx = ctx;
   this.frameNo = 0; 
   this.allArrows = [];
   this.allArrowDirections = ['right', 'left', 'up', 'down'];
   this.arrowCounter = 0;
   this.randomArrowDirection = undefined;
-  this.detectionBody = new DetectionBody(this.ctx, 170, 40, 50, 90, 10,'#95f8cf');
+  this.detectionBody = detectionBody
   this.character = character;
   this.scoreSystem = 2;
-  this.scoreBar = new ScoreBar(ctx, 170, 40, 50, 20, this.character);
+  this.scoreBar = new ScoreBar(ctx, 50, 20, 170, 40, this.character);
   this.song = new Song('audio/main-song.mp3', this);
   this.tempoSong = 38;
+  this.bonusCombo = 0;
 };
     
 Game.prototype.start = function(){
@@ -48,6 +49,15 @@ Game.prototype._pointSystem = function(){
     this.stop();
     this.song.stop();
   };
+  if(this.bonusCombo > 20){
+    this.scoreSystem = 4;
+    this.detectionBody.color = 'black';
+    setTimeout(function(){
+      this.scoreSystem = 2;
+      this.detectionBody.color = '#95f8cf';
+      this.bonusCombo = 0;
+    }.bind(this), 5000);
+  }
 };
 
 Game.prototype._deleteArrow = function() {
@@ -76,13 +86,11 @@ Game.prototype._generateRandomArrow = function() {
     if (this._arrowsTempoControl(this.tempoSong) || this.frameNo == 1) {
       this._randomArrow(4);
       this.allArrows.push(new Arrow(this.ctx, this.randomArrowDirection, this.detectionBody.x, 400, 20, 20));
-      this.arrowCounter++;
     };
   } else if (this.frameNo > this.tempoSong){
     if (this._arrowsTempoControl(this.tempoSong) || this.frameNo == 1) {
       this._randomArrow(2);
       this.allArrows.push(new Arrow(this.ctx, this.randomArrowDirection, this.detectionBody.x, 400, 20, 20));
-      this.arrowCounter++;   
     }; 
   };
   this.scoreBar.hideBar.newWidth();
@@ -140,13 +148,13 @@ Game.prototype.isOnDetectionBody = function (actualDirection) {
   if (this.allArrows[0].direction === actualDirection && this.allArrows[0].status) {
         console.log("perfect");
         this.addPoints(this.scoreSystem);
-        this.arrowsOnCombo++;
+        this.bonusCombo++;
         this.allArrows[0].status = false;
         return true;
         if ((this.allArrows[0].y > (detectionBody.y + detectionBody.height)) && ((this.allArrows[0].y + this.allArrows[0].height) < (detectionBody.y + detectionBody.height*1,5))) {
           console.log("almost perfect");
           this.addPoints(this.scoreSystem/2);
-          this.arrowsOnCombo++;
+          this.bonusCombo = 0;
           this.allArrows[0].status = false;
           return true;
         };

@@ -1,4 +1,4 @@
-function DetectionBody(ctx, width, height, x, y, radius, color){
+function DetectionBody(ctx, x, y, width, height, radius, color){
   this.width = width;
   this.height = height;
   this.x = x;

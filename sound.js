@@ -16,6 +16,3 @@ Song.prototype.play = function(){
 Song.prototype.stop = function(){
       this.sound.pause();  
 };
-
-Song.prototype.onended = function(){
-  this.game.stop()}

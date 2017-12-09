@@ -1,5 +1,5 @@
 //creación de personaje con posición, contador, área que recibira los inputs, generación aleatoria de sus flechas.
-function Character(x, y, ctx, spriteWidth, spriteHeight, rows, cols, frameCount, speed, image){
+function Character(ctx, x, y, spriteWidth, spriteHeight, rows, cols, frameCount, speed, image){
   this.x = x;
   this.y = y;
   this.score = 0;
