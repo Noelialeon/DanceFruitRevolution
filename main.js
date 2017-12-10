@@ -13,7 +13,7 @@ function startGame(){
 		ctx,
 		new DetectionBody(ctx, 50, 90, 170, 40, 10,'#95f8cf'),
 		// new Character(x, y, ctx, spriteWidth, spriteHeight, rows, cols, frameCount, speed, 'images/MW_spriteSheet-01.png'),
-		new Character(ctx, 80, 200, 1604, 209, 1, 13, 13, 80, 'images/MW_spriteSheet-01.png'),
+		new Character(ctx, 50, 140, 2478, 1053, 3, 13, 13, 80, 'images/MW_spriteSheet-01.png'),
 		new ScoreBar(ctx)
 	);
 	game.start();

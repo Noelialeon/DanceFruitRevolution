@@ -31,9 +31,10 @@ Game.prototype.stop = function (){
 Game.prototype._updateGameArea = function() {
   this._pointSystem();
   this._clear();
+  console.log(this.frameNo);
   this.frameNo += 1;
   this._deleteArrow();
-  this.arrowsOnDetectionBody();
+  this._arrowsOnDetectionBody();
   //pinta 
   this.character.printScore();
   this.detectionBody.update();
@@ -45,11 +46,20 @@ Game.prototype._updateGameArea = function() {
 };
 
 Game.prototype._pointSystem = function(){
-  if (this.character.score < -3){
-    this.stop();
-    this.song.stop();
-  };
+  // if (this.character.score < -3){
+  //   this.stop();
+  //   this.song.stop();
+  // };
   if(this.bonusCombo > 20){
+    this.scoreSystem = 4;
+    this.detectionBody.color = 'black';
+    setTimeout(function(){
+      this.scoreSystem = 2;
+      this.detectionBody.color = '#95f8cf';
+      this.bonusCombo = 0;
+    }.bind(this), 5000);
+  }
+    if(this.bonusCombo > 20){
     this.scoreSystem = 4;
     this.detectionBody.color = 'black';
     setTimeout(function(){
@@ -66,13 +76,13 @@ Game.prototype._deleteArrow = function() {
       var index = this.allArrows.indexOf(arrow);
       this.allArrows.splice(index, 1);
       if(arrow.status === true){
-        this.character.score -= 1;
+        this.character.score -= this.scoreSystem;
       };
     };
   }.bind(this));
 };
 
-Game.prototype.arrowsOnDetectionBody = function(){
+Game.prototype._arrowsOnDetectionBody = function(){
   for (var i = 0; i < this.allArrows.length; i += 1) {
     if (this.allArrows[i].status === undefined && this.allArrows[i].y >= (this.detectionBody.y - 3) &&
     ((this.allArrows[i].y + this.allArrows[i].height) < (this.detectionBody.y + this.detectionBody.height*2))){
@@ -81,8 +91,23 @@ Game.prototype.arrowsOnDetectionBody = function(){
   };
 };
 
+//Tempos de la canción
 Game.prototype._generateRandomArrow = function() {
-  if (this.frameNo > (this.tempoSong*30)){
+  if (this.frameNo > 7800){
+    if (this._arrowsTempoControl(this.tempoSong) || this.frameNo == 1) {
+      this._randomArrow(2);
+    };
+  } else if (this.frameNo > 7300){
+    if (this._arrowsTempoControl(this.tempoSong) || this.frameNo == 1) {
+      this._randomArrow(4);
+      this.allArrows.push(new Arrow(this.ctx, this.randomArrowDirection, this.detectionBody.x, 400, 20, 20));
+  };
+  } else if (this.frameNo > 4900){
+    if (this._arrowsTempoControl(this.tempoSong/2) || this.frameNo == 1) {
+      this._randomArrow(4);
+      this.allArrows.push(new Arrow(this.ctx, this.randomArrowDirection, this.detectionBody.x, 400, 20, 20));
+    };
+  } else if(this.frameNo > (this.tempoSong*30)){
     if (this._arrowsTempoControl(this.tempoSong) || this.frameNo == 1) {
       this._randomArrow(4);
       this.allArrows.push(new Arrow(this.ctx, this.randomArrowDirection, this.detectionBody.x, 400, 20, 20));
@@ -91,15 +116,17 @@ Game.prototype._generateRandomArrow = function() {
     if (this._arrowsTempoControl(this.tempoSong) || this.frameNo == 1) {
       this._randomArrow(2);
       this.allArrows.push(new Arrow(this.ctx, this.randomArrowDirection, this.detectionBody.x, 400, 20, 20));
-    }; 
-  };
+    };
+  };  
   this.scoreBar.hideBar.newWidth();
   this.scoreBar.update();
 };
 
 //frecuencia con la que aparece cada arrow
 Game.prototype._arrowsTempoControl = function(n){
-  if ((this.frameNo / n) % 1 == 0) {return true;}
+  if ((this.frameNo / n) % 1 == 0) {
+    return true;
+  };
   return false;
 };
 
@@ -122,7 +149,7 @@ Game.prototype._assignControlsToKeys = function () {
     switch (e.keyCode) {
       case 39:
         if(this.isOnDetectionBody('left')){
-          // this.character.move('left')
+          // this.character.moveLeft();
         };
         break;
       case 38:
@@ -137,7 +164,7 @@ Game.prototype._assignControlsToKeys = function () {
         break;
       case 37:
         if(this.isOnDetectionBody('right')){
-          // this.character.move('right')
+          // this.character.moveRight();
         };
         break;
     };
@@ -159,8 +186,8 @@ Game.prototype.isOnDetectionBody = function (actualDirection) {
           return true;
         };
   };
-  this.character.score -= 1;
-  this.arrowsOnCombo = 0;
+  this.character.score -= this.scoreSystem;
+  this.bonusCombo = 0;
   console.log("Miss it");
 };
 
