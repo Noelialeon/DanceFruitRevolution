@@ -10,9 +10,9 @@ function Song(src, game) {
 };
 
 Song.prototype.play = function(){
-      this.sound.play();
+  this.sound.play();
 };
 
 Song.prototype.stop = function(){
-      this.sound.pause();  
+  this.sound.pause();  
 };

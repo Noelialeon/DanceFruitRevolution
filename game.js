@@ -1,22 +1,24 @@
-function Game(ctx, detectionBody, character, scoreBar){
+function Game(ctx, character, scoreBar){
   this.ctx = ctx;
   this.frameNo = 0; 
   this.allArrows = [];
-  this.allArrowDirections = ['right', 'left', 'up', 'down'];
+  this.allArrowDirections = ['left', 'right', 'up', 'down'];
   this.arrowCounter = 0;
   this.randomArrowDirection = undefined;
-  this.detectionBody = detectionBody
-  this.character = character;
+  this.detectionBody = new DetectionBody(ctx, 120, 70, 200, 40, 10,'#95f8cf');
+  this.character = new Character(ctx, 90, 40, 3259, 2506, 5, 12, 100, 'images/SpriteSheet_Mia.png');
   this.scoreSystem = 2;
-  this.scoreBar = new ScoreBar(ctx, 50, 20, 170, 40, this.character);
   this.song = new Song('audio/main-song.mp3', this);
   this.tempoSong = 38;
   this.bonusCombo = 0;
+  this.pause = false;
 };
     
 Game.prototype.start = function(){
   this._assignControlsToKeys();
   this.gameInterval = setInterval(this._updateGameArea.bind(this), 20);
+  this.character.updateCharacter();
+  this.song.play();
 };
 
 Game.prototype._clear = function (){
@@ -26,12 +28,13 @@ Game.prototype._clear = function (){
 Game.prototype.stop = function (){
   clearInterval(this.gameInterval);
   this.character.stopCharacter();
+  this.song.stop();
 };
 
 Game.prototype._updateGameArea = function() {
+  this.scoreBar = new ScoreBar(ctx, 450, 500, 250, 50, this.character);
   this._pointSystem();
   this._clear();
-  console.log(this.frameNo);
   this.frameNo += 1;
   this._deleteArrow();
   this._arrowsOnDetectionBody();
@@ -46,28 +49,28 @@ Game.prototype._updateGameArea = function() {
 };
 
 Game.prototype._pointSystem = function(){
-  // if (this.character.score < -3){
-  //   this.stop();
-  //   this.song.stop();
-  // };
-  if(this.bonusCombo > 20){
-    this.scoreSystem = 4;
-    this.detectionBody.color = 'black';
-    setTimeout(function(){
-      this.scoreSystem = 2;
-      this.detectionBody.color = '#95f8cf';
-      this.bonusCombo = 0;
-    }.bind(this), 5000);
-  }
-    if(this.bonusCombo > 20){
-    this.scoreSystem = 4;
-    this.detectionBody.color = 'black';
-    setTimeout(function(){
-      this.scoreSystem = 2;
-      this.detectionBody.color = '#95f8cf';
-      this.bonusCombo = 0;
-    }.bind(this), 5000);
-  }
+  if (this.character.score < -3){
+    this.stop();
+  };
+  if(this.frameNo < 7300){
+    if(this.bonusCombo > 20 && this.frameNo > 4900){
+      this.scoreSystem = 6;
+      this.detectionBody.color = 'red';
+      setTimeout(function(){
+        this.scoreSystem = 2;
+        this.detectionBody.color = '#95f8cf';
+        this.bonusCombo = 0;
+      }.bind(this), 5000);
+    } else if(this.bonusCombo > 20){
+      this.scoreSystem = 4;
+      this.detectionBody.color = 'black';
+      setTimeout(function(){
+        this.scoreSystem = 2;
+        this.detectionBody.color = '#95f8cf';
+        this.bonusCombo = 0;
+      }.bind(this), 5000);
+    };
+  };
 };
 
 Game.prototype._deleteArrow = function() {
@@ -100,22 +103,22 @@ Game.prototype._generateRandomArrow = function() {
   } else if (this.frameNo > 7300){
     if (this._arrowsTempoControl(this.tempoSong) || this.frameNo == 1) {
       this._randomArrow(4);
-      this.allArrows.push(new Arrow(this.ctx, this.randomArrowDirection, this.detectionBody.x, 400, 20, 20));
+      this.allArrows.push(new Arrow(this.ctx, this.randomArrowDirection, 400, 20, 20, this.detectionBody));
   };
   } else if (this.frameNo > 4900){
     if (this._arrowsTempoControl(this.tempoSong/2) || this.frameNo == 1) {
       this._randomArrow(4);
-      this.allArrows.push(new Arrow(this.ctx, this.randomArrowDirection, this.detectionBody.x, 400, 20, 20));
+      this.allArrows.push(new Arrow(this.ctx, this.randomArrowDirection, 400, 20, 20, this.detectionBody));
     };
   } else if(this.frameNo > (this.tempoSong*30)){
     if (this._arrowsTempoControl(this.tempoSong) || this.frameNo == 1) {
       this._randomArrow(4);
-      this.allArrows.push(new Arrow(this.ctx, this.randomArrowDirection, this.detectionBody.x, 400, 20, 20));
+      this.allArrows.push(new Arrow(this.ctx, this.randomArrowDirection, 400, 20, 20, this.detectionBody));
     };
   } else if (this.frameNo > this.tempoSong){
     if (this._arrowsTempoControl(this.tempoSong) || this.frameNo == 1) {
       this._randomArrow(2);
-      this.allArrows.push(new Arrow(this.ctx, this.randomArrowDirection, this.detectionBody.x, 400, 20, 20));
+      this.allArrows.push(new Arrow(this.ctx, this.randomArrowDirection, 400, 20, 20, this.detectionBody));
     };
   };  
   this.scoreBar.hideBar.newWidth();
@@ -147,26 +150,34 @@ Game.prototype._paintAllArrows = function() {
 Game.prototype._assignControlsToKeys = function () {
   document.onkeydown = function (e) {
     switch (e.keyCode) {
-      case 39:
-        if(this.isOnDetectionBody('left')){
-          // this.character.moveLeft();
-        };
-        break;
+      case 37:
+      if(this.isOnDetectionBody('left')){
+        this.character.moveLeft();
+      };
+      break;
       case 38:
         if(this.isOnDetectionBody('up')){
-          // this.character.move('up')
+          this.character.moveUp();
         };
         break;
       case 40:
         if(this.isOnDetectionBody('down')){
-          // this.character.move('down')
+          this.character.moveDown();
         };
         break;
-      case 37:
+      case 39:
         if(this.isOnDetectionBody('right')){
-          // this.character.moveRight();
+          this.character.moveRight();
         };
         break;
+      case 32:
+        if(this.pause){
+          this.pause = false;
+          this.start();
+        } else {
+          this.pause = true;
+          this.stop();
+        };
     };
   }.bind(this);
 };
@@ -188,6 +199,7 @@ Game.prototype.isOnDetectionBody = function (actualDirection) {
   };
   this.character.score -= this.scoreSystem;
   this.bonusCombo = 0;
+  this.character.fail();
   console.log("Miss it");
 };
 

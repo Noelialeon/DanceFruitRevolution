@@ -1,27 +1,29 @@
-function Arrow(ctx, direction, x, y, width, height) {
+function Arrow(ctx, direction, y, width, height, detectionBody) {
     this.ctx = ctx;
     this.direction = direction;
     this.width = width;
     this.height = height;
-    this.x = x
+    this.x;
     this.y = y;
+    this.detectionBody = detectionBody;
     this.status = undefined;
     switch (this.direction) {
-        case 'right':
-            this.x = x;
-            this._drawArrowImage('images/arrowRight.png');
+        case 'left':
+            // this.x = this.detectionBody.x + 5;
+            this.x = this.detectionBody.x + ((this.detectionBody.width - (this.width*4) - this.width)/4)*0.5;
+            this._drawArrowImage('images/arrowLeft.png');
             break;
         case 'up':
-            this.x = x + 50;
+            this.x = this.detectionBody.x + this.width + ((this.detectionBody.width - (this.width*4) - this.width)/4)*1.5;
             this._drawArrowImage('images/arrowUp.png');
             break;
         case 'down':
-            this.x = x + 100;
+            this.x = this.detectionBody.x  + this.detectionBody.width - this.width*2 - ((this.detectionBody.width - (this.width*4) - this.width)/3)*1.5;
             this._drawArrowImage('images/arrowDown.png');
             break;
-        case 'left':
-            this.x = x + 150;
-            this._drawArrowImage('images/arrowLeft.png');
+        case 'right':
+            this.x =  this.detectionBody.x + this.detectionBody.width - this.width - ((this.detectionBody.width - (this.width*4) - this.width)/4)*0.5;
+            this._drawArrowImage('images/arrowRight.png');
             break;
     };
 };
