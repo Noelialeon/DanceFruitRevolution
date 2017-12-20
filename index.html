@@ -7,26 +7,32 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Pulp Dance Revolution</title>
     <link href="https://fonts.googleapis.com/css?family=Special+Elite" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 </head>
 
 <body>
-    
-    <div> 
-        <button class='start'>test</button>
+    <div id = 'intro'> 
+        <button class='start'>Twist!</button>
     </div>
     <canvas id="canvas" width="800" height="550"></canvas>
+    <div id = 'end'> 
+        <p>Congrats!</p>
+    </div>
+    <div id = 'pause'> 
+        <p>Pause. Press Space Bar to go back to game again</p>
+    </div>
     <audio id="song" src="audio/main-song.mp3"></audio>
     <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="arrow.js"></script>
-    <script type="text/javascript" src="character.js"></script>
-    <script type="text/javascript" src="scoreBar.js"></script>
-    <script type="text/javascript" src="detectionBody.js"></script>
-    <script type="text/javascript" src="sound.js"></script>
-    <script type="text/javascript" src="game.js"></script>
-    <script type="text/javascript" src="intro.js"></script>
-    <script type="text/javascript" src="main.js"></script>
+    <script type="text/javascript" src="js/arrow.js"></script>
+    <script type="text/javascript" src="js/character.js"></script>
+    <script type="text/javascript" src="js/scoreBar.js"></script>
+    <script type="text/javascript" src="js/detectionBody.js"></script>
+    <script type="text/javascript" src="js/sound.js"></script>
+    <script type="text/javascript" src="js/game.js"></script>
+    <script type="text/javascript" src="js/intro.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
     <p>Noelia Ele | Pulp Dance Revolution</p>
 </body>
 
