@@ -50,14 +50,14 @@ Game.prototype._updateGameArea = function() {
 };
 
 Game.prototype._pointSystem = function(){
-  if (this.character.score < -3){
-    document.onkeydown = null;
-    this.character.die();
-    this.song.stop();
-    if (this.character.dead){
-      this.stop();
-    };
-  };
+  // if (this.character.score < -3){
+  //   document.onkeydown = null;
+  //   this.character.die();
+  //   this.song.stop();
+  //   if (this.character.dead){
+  //     this.stop();
+  //   };
+  // };
   if(this.frameNo < 7300){
     if(this.bonusCombo > 20 && this.frameNo > 4900){
       this.scoreSystem = 6;
@@ -152,43 +152,72 @@ Game.prototype._paintAllArrows = function() {
   };
 };
 
+
+var left, right, up, down;
+left = false;
+right = false;
+up = false;
+down = false;
+
 // Detección de objetos encapsulada en el método Game
 Game.prototype._assignControlsToKeys = function () {
   document.onkeydown = function (e) {
     switch (e.keyCode) {
+      case 32:
+          if(this.pause){
+            this.pause = false;
+            $('#pause').css('display', 'none')
+            this.start();
+        } else {
+            this.pause = true;
+            $('#pause').css('display', 'flex');
+            this.stop();
+        };
       case 37:
-      if(this.isOnDetectionBody('left')){
+      if(!left && this.isOnDetectionBody('left')){
+        left = true;
         this.character.moveLeft();
       };
       break;
       case 38:
-        if(this.isOnDetectionBody('up')){
+        if(!up && this.isOnDetectionBody('up')){
+          up = true;         
           this.character.moveUp();
         };
         break;
       case 40:
-        if(this.isOnDetectionBody('down')){
+      if(!down && this.isOnDetectionBody('down')){
+          down = true;  
           this.character.moveDown();
         };
         break;
-      case 39:
-        if(this.isOnDetectionBody('right')){
-          this.character.moveRight();
+        case 39:
+          if(!right && this.isOnDetectionBody('right')){
+            right = true;
+            this.character.moveRight();
         };
         break;
-      case 32:
-        if(this.pause){
-          this.pause = false;
-          $('#pause').css('display', 'none')
-          this.start();
-        } else {
-          this.pause = true;
-          $('#pause').css('display', 'flex');
-          this.stop();
-        };
     };
   }.bind(this);
 };
+
+document.onkeyup = function (e){
+  switch (e.keyCode) {
+    case 37:
+      left = false;
+       break;
+    case 38:
+      up = false;
+      break;
+    case 40:
+      down = false;
+      break;
+    case 39:
+      right = false;
+      break;
+  };
+}.bind(this);
+
 
 Game.prototype.isOnDetectionBody = function (actualDirection) {
   if (this.allArrows[0].direction === actualDirection && this.allArrows[0].status) {
