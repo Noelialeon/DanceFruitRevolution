@@ -7,6 +7,7 @@ $(document).ready(function () {
 	canvas = document.getElementById("canvas");
 	ctx = canvas.getContext('2d');
 		$('.start').click(function(){
+			$('#shake-glass').css('display', 'block');;			
 			$('canvas').css('display', 'block');
 			$('#intro').css('display', 'none');
 			startGame();
@@ -19,11 +20,6 @@ $(document).ready(function () {
 		$('#end').toggle();
 	});
 });
-	
-// function startIntro(){
-// 	var intro = new Intro(ctx);
-// 	intro.start();
-// };
 
 function startGame(){
 	game = new Game(ctx);

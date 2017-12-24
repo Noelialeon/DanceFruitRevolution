@@ -1,12 +1,14 @@
-function Game(ctx, character, scoreBar){
+function Game(ctx){
   this.ctx = ctx;
   this.frameNo = 0; 
   this.allArrows = [];
   this.allArrowDirections = ['left', 'right', 'up', 'down'];
   this.arrowCounter = 0;
   this.randomArrowDirection = undefined;
-  this.detectionBody = new DetectionBody(ctx, 120, 70, 200, 40, 10,'#747474a4');
+  this.detectionBodyColor = '#b6b6b6';
+  this.detectionBody = new DetectionBody(ctx, 120, 70, 200, 40, 10, this.detectionBodyColor);
   this.character = new Character(ctx, 90, 40, 3259, 3006, 6, 12, 100, 'images/SpriteSheet_Mia.png');
+  this.scoreBar = new ScoreBar(ctx, 485, 80, 150, 376, this.character);
   this.scoreSystem = 2;
   this.song = new Song('audio/main-song.mp3', this);
   this.tempoSong = 38;
@@ -33,20 +35,19 @@ Game.prototype.stop = function (){
 
 Game.prototype._updateGameArea = function() {
   this._assignControlsToKeys();
-  this.scoreBar = new ScoreBar(ctx, 450, 500, 250, 50, this.character);
-  this.character.printScore();
   this._clear();
   this.frameNo += 1;
   this._deleteArrow();
   this._arrowsOnDetectionBody();
-  //pinta 
   this._pointSystem();
+  //pinta 
   this.detectionBody.update();
   this.character.drawImage();
   this._generateRandomArrow();
   this._paintAllArrows();
   this.scoreBar.hideBar.newWidth();
   this.scoreBar.update();
+  this.scoreBar.printGlass();
 };
 
 Game.prototype._pointSystem = function(){
@@ -64,7 +65,7 @@ Game.prototype._pointSystem = function(){
       this.detectionBody.color = 'red';
       setTimeout(function(){
         this.scoreSystem = 2;
-        this.detectionBody.color = '#95f8cf';
+        this.detectionBody.color = this.detectionBodyColor;
         this.bonusCombo = 0;
       }.bind(this), 5000);
     } else if(this.bonusCombo > 20){
@@ -72,7 +73,7 @@ Game.prototype._pointSystem = function(){
       this.detectionBody.color = 'black';
       setTimeout(function(){
         this.scoreSystem = 2;
-        this.detectionBody.color = '#95f8cf';
+        this.detectionBody.color = this.detectionBodyColor;
         this.bonusCombo = 0;
       }.bind(this), 5000);
     };
@@ -201,6 +202,7 @@ Game.prototype._assignControlsToKeys = function () {
   }.bind(this);
 };
 
+//Función que bloquea el botón al pulsarlo
 document.onkeyup = function (e){
   switch (e.keyCode) {
     case 37:

@@ -83,24 +83,3 @@ Character.prototype.stopCharacter= function(){
   clearInterval(this.characterInterval);
   clearInterval(this.characterLastInterval);
 };
-
-Character.prototype.updateScore = function(){
-  this.printScore();
-};
-
-Character.prototype.printScore = function() {
-  this.ctx.save();
-  if(this.score < 0){
-    this.ctx.fillStyle = this.color;
-    this.ctx.beginPath()
-    this.ctx.font = "15px Arial";
-    this.ctx.fillText("Danger",80,50);
-    this.ctx.restore();
-  } else {
-    this.ctx.fillStyle = this.color;
-    this.ctx.beginPath();
-    this.ctx.font = "15px Arial";
-    this.ctx.fillText(this.score,80,50);
-    this.ctx.restore();
-  };
-};

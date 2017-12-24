@@ -5,48 +5,51 @@ function ScoreBar(ctx, x, y, width, height, character){
   this.x = x;
   this.y = y;
   this.character = character;
-  this.hideBar = new HideBar(ctx, width, height, x, y, character, this.height);
-  this.ctx.save();
-  this.printScoreBar();
-  this.ctx.restore();
-};
-
+  this.hideBar = new HideBar(this.ctx, this.width, this.height, this.x, this.y, this.character);
+  };
+  
 ScoreBar.prototype.printScoreBar = function(){
+  this.ctx.save();
   this.hideBar.printHideBar();
   this.ctx.globalCompositeOperation = 'source-atop';
   this.image = new Image();
-  this.ctx.fillStyle = 'black';
-  this.ctx.fillRect(this.x, this.y, this.width, this.height);
-  // this.ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+  this.image.src = 'images/shake.png';
+  this.ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
 };
+
+ScoreBar.prototype.printGlass = function(){
+  this.image = new Image();
+  this.image.src = 'images/shake-glass.png';
+  this.ctx.drawImage(this.image, this.x, this.y+80, this.width, this.height-8);
+}
 
 ScoreBar.prototype.update = function(){
   this.ctx.save();
   this.printScoreBar();
   this.ctx.restore();
+  this.printGlass();
 };
 
-//Constructor la capa que nos mostrára la Score Bar
-function HideBar(ctx, width, height, x, y, character, scoreBarHeight){
+//Construye la capa que nos mostrára la Score Bar
+function HideBar(ctx, width, height, x, y, character){
   this.ctx = ctx;
   this.width = width;
   this.height = height;
   this.x = x;
-  this.y = y;
+  this.y = y + height;
   this.character = character;
-  this.scoreBarHeight = scoreBarHeight;
-  this.printHideBar();
 };
 
 HideBar.prototype.printHideBar = function(){
-  this.ctx.fillStyle = 'black';
+  this.ctx.fillStyle = '#000066';
   this.ctx.fillRect(this.x, this.y, this.width, this.height);
-};
+ };
 
 HideBar.prototype.newWidth = function(){
   this.height =- this.character.score;
   if(this.height > 1){
     this.height = 0;
-    this.scoreBarHeight.height = 0;
+  } else if (this.height < -376){
+    this.height = -376;
   };
 };
