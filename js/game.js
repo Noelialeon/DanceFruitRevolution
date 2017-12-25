@@ -5,10 +5,10 @@ function Game(ctx){
   this.allArrowDirections = ['left', 'right', 'up', 'down'];
   this.arrowCounter = 0;
   this.randomArrowDirection = undefined;
-  this.detectionBodyColor = '#b6b6b6';
-  this.detectionBody = new DetectionBody(ctx, 120, 70, 200, 40, 10, this.detectionBodyColor);
-  this.character = new Character(ctx, 90, 40, 3259, 3006, 6, 12, 100, 'images/SpriteSheet_Mia.png');
-  this.scoreBar = new ScoreBar(ctx, 485, 80, 150, 376, this.character);
+  this.detectionBodyColor = '#10B3C6';
+  this.detectionBody = new DetectionBody(ctx, 160, 70, 200, 40, 10, this.detectionBodyColor);
+  this.character = new Character(ctx, 120, 40, 3259, 3006, 6, 12, 100, 'images/SpriteSheet_Mia.png');
+  this.scoreBar = new ScoreBar(ctx, 530, 75, 130, 315, this.character);
   this.scoreSystem = 2;
   this.song = new Song('audio/main-song.mp3', this);
   this.tempoSong = 38;
@@ -62,7 +62,7 @@ Game.prototype._pointSystem = function(){
   if(this.frameNo < 7300){
     if(this.bonusCombo > 20 && this.frameNo > 4900){
       this.scoreSystem = 6;
-      this.detectionBody.color = 'red';
+      this.detectionBody.color = '#EE9C98';
       setTimeout(function(){
         this.scoreSystem = 2;
         this.detectionBody.color = this.detectionBodyColor;
@@ -70,7 +70,7 @@ Game.prototype._pointSystem = function(){
       }.bind(this), 5000);
     } else if(this.bonusCombo > 20){
       this.scoreSystem = 4;
-      this.detectionBody.color = 'black';
+      this.detectionBody.color = '#EE9C98';
       setTimeout(function(){
         this.scoreSystem = 2;
         this.detectionBody.color = this.detectionBodyColor;
@@ -112,12 +112,12 @@ Game.prototype._generateRandomArrow = function() {
       this._randomArrow(4);
       this.allArrows.push(new Arrow(this.ctx, this.randomArrowDirection, 400, 20, 20, this.detectionBody));
   };
-  } else if (this.frameNo > 4900){
+  } else if (this.frameNo > 4850){
     if (this._arrowsTempoControl(this.tempoSong/2) || this.frameNo == 1) {
       this._randomArrow(4);
       this.allArrows.push(new Arrow(this.ctx, this.randomArrowDirection, 400, 20, 20, this.detectionBody));
     };
-  } else if(this.frameNo > (this.tempoSong*30)){
+  } else if(this.frameNo > (this.tempoSong*25)){
     if (this._arrowsTempoControl(this.tempoSong) || this.frameNo == 1) {
       this._randomArrow(4);
       this.allArrows.push(new Arrow(this.ctx, this.randomArrowDirection, 400, 20, 20, this.detectionBody));

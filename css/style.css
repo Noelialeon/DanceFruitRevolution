@@ -12,16 +12,18 @@ body{
 
 canvas {
   border:5px solid #000000;
-  background-color: #000066;
+  background-image: url("../images/background.png");
   padding: 0;
   margin: auto;
   display: none;
- 
-}
+ }
 
 #intro {
+  outline: none;
   border:5px solid #091611;
-  background-color: #000066;
+  background-color: #004F5C;
+  color: white;
+  font-size: 25px;
   height: 550px;
   width: 800px;
   display: flex;
@@ -34,6 +36,7 @@ canvas {
   border:5px solid #ffffff;
   background-color: #0000007a;
   color: white;
+  font-size: 25px;
   height: 550px;
   width: 800px;
   position: absolute;
@@ -46,25 +49,20 @@ canvas {
 
 #end {
   border:5px solid #091611;
-  background-color: #000066;
+  background-color: #004F5C;
+  color: white;
+  font-size: 20px;  
   height: 550px;
   width: 800px;
+  position: absolute;
   display: none;
   flex-direction: row;
   align-items: center;
   justify-content: center;
+
 }
 
  p{
   text-align: center;
   font-family: 'Special Elite', cursive;
-}
-
-button{
-  height: 25px;
-  width: 50px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
 }

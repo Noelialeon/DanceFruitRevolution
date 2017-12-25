@@ -6,12 +6,15 @@ var game;
 $(document).ready(function () {
 	canvas = document.getElementById("canvas");
 	ctx = canvas.getContext('2d');
-		$('.start').click(function(){
-			$('#shake-glass').css('display', 'block');;			
+	document.getElementById("intro").focus();
+	$( "#intro" ).bind( "keydown", function(event) {
+		if(event.which == 32){
+			console.log("enterpress");
 			$('canvas').css('display', 'block');
 			$('#intro').css('display', 'none');
 			startGame();
-	});
+	};
+});
 
 	//fin al terminar la canción
 	$('#song').on('ended', function() {

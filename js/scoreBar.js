@@ -20,7 +20,7 @@ ScoreBar.prototype.printScoreBar = function(){
 ScoreBar.prototype.printGlass = function(){
   this.image = new Image();
   this.image.src = 'images/shake-glass.png';
-  this.ctx.drawImage(this.image, this.x, this.y+80, this.width, this.height-8);
+  this.ctx.drawImage(this.image, this.x, this.y+65, this.width, this.height-8);
 }
 
 ScoreBar.prototype.update = function(){
@@ -41,12 +41,12 @@ function HideBar(ctx, width, height, x, y, character){
 };
 
 HideBar.prototype.printHideBar = function(){
-  this.ctx.fillStyle = '#000066';
+  this.ctx.fillStyle = '#004F5C';
   this.ctx.fillRect(this.x, this.y, this.width, this.height);
  };
 
 HideBar.prototype.newWidth = function(){
-  this.height =- this.character.score;
+  this.height =- this.character.score/2;
   if(this.height > 1){
     this.height = 0;
   } else if (this.height < -376){
