@@ -41,7 +41,7 @@ function HideBar(ctx, width, height, x, y, character){
 };
 
 HideBar.prototype.printHideBar = function(){
-  this.ctx.fillStyle = '#004F5C';
+  this.ctx.fillStyle = '#0D0026';
   this.ctx.fillRect(this.x, this.y, this.width, this.height);
  };
 
@@ -49,7 +49,7 @@ HideBar.prototype.newWidth = function(){
   this.height =- this.character.score/2;
   if(this.height > 1){
     this.height = 0;
-  } else if (this.height < -376){
-    this.height = -376;
+  } else if (this.height <= -300){
+    this.height = -300;
   };
 };

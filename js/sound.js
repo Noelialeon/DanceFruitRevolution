@@ -6,9 +6,11 @@ function Song(src) {
 };
 
 Song.prototype.play = function(){
+  this.isPlaying = true;
   this.sound.play();
 };
 
 Song.prototype.stop = function(){
+  this.isPlaying = false;
   this.sound.pause();  
 };

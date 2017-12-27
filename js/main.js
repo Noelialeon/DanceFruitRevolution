@@ -9,7 +9,6 @@ $(document).ready(function () {
 	document.getElementById("intro").focus();
 	$( "#intro" ).bind( "keydown", function(event) {
 		if(event.which == 32){
-			console.log("enterpress");
 			$('canvas').css('display', 'block');
 			$('#intro').css('display', 'none');
 			startGame();
@@ -18,9 +17,9 @@ $(document).ready(function () {
 
 	//fin al terminar la canción
 	$('#song').on('ended', function() {
-		$('canvas').toggle();
 		endGame();
-		$('#end').toggle();
+		$('canvas').toggle();
+		$('#end').css('display', 'flex');
 	});
 });
 

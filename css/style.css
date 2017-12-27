@@ -32,6 +32,18 @@ canvas {
   justify-content: center;
 }
 
+#combo {
+  height: 50px;
+  width: auto;
+  position: absolute;
+  top: 20px;
+  left: 490px;
+  display: none;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
 #pause {
   border:5px solid #ffffff;
   background-color: #0000007a;
@@ -44,7 +56,6 @@ canvas {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-
 }
 
 #end {
@@ -54,12 +65,12 @@ canvas {
   font-size: 20px;  
   height: 550px;
   width: 800px;
-  position: absolute;
+  height: 550px;
+  width: 800px;
   display: none;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-
 }
 
  p{

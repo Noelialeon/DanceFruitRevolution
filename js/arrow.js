@@ -9,7 +9,6 @@ function Arrow(ctx, direction, y, width, height, detectionBody) {
     this.status = undefined;
     switch (this.direction) {
         case 'left':
-            // this.x = this.detectionBody.x + 5;
             this.x = this.detectionBody.x + ((this.detectionBody.width - (this.width*4) - this.width)/4)*0.5;
             this._drawArrowImage('images/arrowLeft.png');
             break;
