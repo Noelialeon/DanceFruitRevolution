@@ -8,7 +8,7 @@ function Game(ctx){
   this.detectionBodyColor = '#0D0026';
   this.detectionBody = new DetectionBody(ctx, 160, 80, 200, 45, 10, this.detectionBodyColor);
   this.character = new Character(ctx, 135, 40, 3259, 3006, 6, 12, 100, 'images/SpriteSheet_Mia.png');
-  this.scoreBar = new ScoreBar(ctx, 620, 95, 125, 300, this.character);
+  this.scoreBar = new ScoreBar(ctx, 620, 85, 125, 300, this.character);
   this.neon = new Neon(ctx, this.detectionBody,"images/detection-body.png");
   this.scoreSystem = 2;
   this.song = new Song('audio/main-song.mp3');
@@ -81,7 +81,7 @@ Game.prototype._deleteArrow = function() {
       var index = this.allArrows.indexOf(arrow);
       this.allArrows.splice(index, 1);
       if(arrow.status === true){
-        this.character.score -= this.scoreSystem;
+        this.character.score -= 1;
       };
     };
   }.bind(this));

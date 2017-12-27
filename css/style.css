@@ -23,10 +23,10 @@ canvas {
   border:5px solid #091611;
   background-color: #004F5C;
   color: white;
-  font-size: 25px;
+  font-size: 24px;
   height: 550px;
   width: 800px;
-  display: flex;
+  display: inline-grid;
   flex-direction: row;
   align-items: center;
   justify-content: center;
@@ -57,6 +57,7 @@ canvas {
   align-items: center;
   justify-content: center;
 }
+
 
 #end {
   border:5px solid #091611;
