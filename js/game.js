@@ -5,8 +5,7 @@ function Game(ctx){
   this.allArrowDirections = ['left', 'right', 'up', 'down'];
   this.arrowCounter = 0;
   this.randomArrowDirection = undefined;
-  this.detectionBodyColor = '#0D0026';
-  this.detectionBody = new DetectionBody(ctx, 160, 80, 200, 45, 10, this.detectionBodyColor);
+  this.detectionBody = new DetectionBody(ctx, 160, 80, 200, 45, 10, '#0D0026');
   this.character = new Character(ctx, 135, 40, 3259, 3006, 6, 12, 100, 'images/SpriteSheet_Mia.png');
   this.scoreBar = new ScoreBar(ctx, 620, 85, 125, 300, this.character);
   this.neon = new Neon(ctx, this.detectionBody,"images/detection-body.png");
@@ -18,9 +17,9 @@ function Game(ctx){
 };
     
 Game.prototype.start = function(){
-  this.gameInterval = setInterval(this._updateGameArea.bind(this), 20);
   this.character.updateCharacter();
   this.neon.updateNeon();
+  this.gameInterval = setInterval(this._updateGameArea.bind(this), 20);
   this.song.play();
 };
 
@@ -54,7 +53,7 @@ Game.prototype._updateGameArea = function() {
 };
 
 Game.prototype._pointSystem = function(){
-  if (this.character.score < -3){
+  if (this.character.score < -3 && this.frameNo < 7300){
     document.onkeydown = null;
     this.character.die();
     if (this.character.dead){
@@ -64,7 +63,7 @@ Game.prototype._pointSystem = function(){
   };
 
   // Combo al acumular 20 aciertos
-  if(this.frameNo < 7300 && this.bonusCombo >= 20){
+  if(this.frameNo < 1000 && this.bonusCombo >= 20){
     this.scoreSystem = 4;
     $('#combo').css('display', 'flex');
     setTimeout(function(){
@@ -81,6 +80,7 @@ Game.prototype._deleteArrow = function() {
       var index = this.allArrows.indexOf(arrow);
       this.allArrows.splice(index, 1);
       if(arrow.status === true){
+        this.bonusCombo = 0;
         this.character.score -= 1;
       };
     };
@@ -96,7 +96,7 @@ Game.prototype._arrowsOnDetectionBody = function(){
   };
 };
 
-//Tempos de la canción
+//Tempos y ritmos de aparición de las flechas durante la canción
 Game.prototype._generateRandomArrow = function() {
   if (this.frameNo > 7800){
     if (this._arrowsTempoControl(this.tempoSong) || this.frameNo == 1) {
@@ -148,14 +148,12 @@ Game.prototype._paintAllArrows = function() {
   };
 };
 
-// Fun
 var left, right, up, down;
 left = false;
 right = false;
 up = false;
 down = false;
 
-// Detección de objetos encapsulada en el método Game
 Game.prototype._assignControlsToKeys = function () {
   document.onkeydown = function (e) {
     switch (e.keyCode) {
@@ -216,19 +214,18 @@ document.onkeyup = function (e){
   };
 }.bind(this);
 
-
 Game.prototype.isOnDetectionBody = function (actualDirection) {
   if (this.allArrows[0].direction === actualDirection && this.allArrows[0].status) {
-        this.addPoints(this.scoreSystem);
-        this.bonusCombo++;
-        this.allArrows[0].status = false;
-        return true;
-        if ((this.allArrows[0].y > (detectionBody.y + detectionBody.height)) && ((this.allArrows[0].y + this.allArrows[0].height) < (detectionBody.y + detectionBody.height*1,5))) {
-          this.addPoints(this.scoreSystem/2);
-          this.bonusCombo = 0;
-          this.allArrows[0].status = false;
-          return true;
-        };
+    this.addPoints(this.scoreSystem);
+    this.bonusCombo++;
+    this.allArrows[0].status = false;
+    return true;
+    if ((this.allArrows[0].y > (detectionBody.y + detectionBody.height)) && ((this.allArrows[0].y + this.allArrows[0].height) < (detectionBody.y + detectionBody.height*1,5))) {
+      this.addPoints(this.scoreSystem/2);
+      this.bonusCombo = 0;
+      this.allArrows[0].status = false;
+      return true;
+    };
   };
   this.character.score -= this.scoreSystem;
   this.bonusCombo = 0;

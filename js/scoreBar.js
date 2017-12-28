@@ -6,7 +6,7 @@ function ScoreBar(ctx, x, y, width, height, character){
   this.y = y;
   this.character = character;
   this.hideBar = new HideBar(this.ctx, this.width, this.height, this.x, this.y, this.character);
-  };
+};
   
 ScoreBar.prototype.printScoreBar = function(){
   this.ctx.save();
@@ -43,7 +43,7 @@ function HideBar(ctx, width, height, x, y, character){
 HideBar.prototype.printHideBar = function(){
   this.ctx.fillStyle = '#0D0026';
   this.ctx.fillRect(this.x, this.y, this.width, this.height);
- };
+};
 
 HideBar.prototype.newWidth = function(){
   this.height =- this.character.score/2;

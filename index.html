@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Pulp Dance Revolution</title>
+    <link rel="shortcut icon" type="image/png" href="images/preview.png">
+    <title>Pulp Dance Revolution | Noelia Ele</title>
     <link href="https://fonts.googleapis.com/css?family=Special+Elite" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -15,16 +16,17 @@
 <body>
     <div id='canvas-all-screens'>
         <div id = 'intro' tabindex="1">
+            <!-- <button class='btn' onclick=startGame()>Play Again!</button> -->
             <p> Press the correct Arrow Key on the Neon Sign <br><br>Are you ready to twist?<br>Spacebar to start!<br>
             <p style="color:#10B3C6;">She wants that trophy, so dance good!</p>
         </div>
         <canvas id="canvas" width="800" height="550"></canvas>
-        <div id = 'end'> 
-        </div>      
         <img id='combo' src="images/combo.png">
         <div id = 'pause'> 
-        <p>Pause</p>
+            <p>Pause</p>
         </div>
+        <div id = 'end'>
+        </div>      
     </div>
     <audio id="song" src="audio/main-song.mp3"></audio>
     <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
