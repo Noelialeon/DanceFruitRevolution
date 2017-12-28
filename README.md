@@ -1,2 +1,2 @@
-# PulpDanceRevolution
+# DanceFruitRevolution
 Pulp Dance Revolution
