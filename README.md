@@ -1,2 +1,2 @@
 # DanceFruitRevolution
-Pulp Dance Revolution
+Dance Fruit Revolution
